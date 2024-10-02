@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html ng-app="universityLoginApp">
+
+<head>
+    <title>QuizMaster Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            background: url('for.avif') center/cover no-repeat;
+            transition: background 0.5s ease;
+        }
+
+        .login-container {
+            background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent background */
+            padding: 30px; /* Reduced padding */
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            transition: transform 0.3s ease, opacity 1s ease, width 1s ease, height 1s ease;
+            opacity: 0;
+            width: 300px; /* Reduced width */
+            height: 400px; /* Reduced height */
+            margin-top: 80px; /* Added margin to prevent collision with header */
+        }
+
+        .login-container.show-animation {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .login-container h2 {
+            margin: 0;
+            color: #333;
+            font-size: 30px; /* Slightly larger font size for the title */
+        }
+
+        .login-container .graduation-cap {
+            font-size: 60px; /* Larger icon size */
+            margin: 20px;
+            color: #007BFF; /* Icon color */
+        }
+
+        .login-container input[type="text"],
+        .login-container input[type="password"] {
+            width: 100%;
+            padding: 10px; /* Reduced padding */
+            margin: 12px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .login-container button {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 20px; /* Reduced padding */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 18px;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .login-container button:hover {
+            background-color: #0056b3;
+        }
+
+        .login-container button:active {
+            transform: scale(0.95);
+        }
+
+        .error-message {
+            color: red;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #003366;
+            color: white;
+            padding: 20px 30px; /* Increased padding for more emphasis */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: absolute;
+            top: 0;
+            width: 100%;
+            font-size: 22px; /* Increased font size for header */
+        }
+
+        header .logo h1 {
+            margin: 0;
+            font-size: 28px; /* Larger font size for logo title */
+            font-weight: 600;
+        }
+
+        header nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        header nav ul li {
+            margin-right: 20px;
+        }
+
+        header nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 20px; /* Larger font size for navigation links */
+        }
+
+        header nav ul li a:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #003366;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        /* Scrolling Text */
+        .scrolling-text {
+            overflow: hidden;
+            white-space: nowrap;
+            box-sizing: border-box;
+        }
+
+        .scrolling-text p {
+            display: inline-block;
+            font-size: 38px;
+            font-weight: 600;
+            animation: scrollText 10s linear infinite;
+            color: #003366;
+        }
+
+        @keyframes scrollText {
+            from {
+                transform: translateX(100%);
+            }
+
+            to {
+                transform: translateX(-100%);
+            }
+        }
+    </style>
+</head>
+
+<body ng-controller="LoginController">
+    <header>
+        <div class="logo">
+            <h1>QuizMaster</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#">Login</a></li>
+                <li><a href="regs.html">Register</a></li>
+                <li><a href="profile.html">Profile</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="login-container show-animation">
+        <h2>QuizMaster Login</h2>
+        <i class="fa fa-graduation-cap graduation-cap"></i>
+        <form ng-submit="login()" name="form" onsubmit="return validate()">
+            <input type="text" ng-model="username" id="username" name="username" placeholder="Username" required>
+            <input type="password" ng-model="password" id="password" name="password" placeholder="Password" required>
+            <div class="error-message" id="error-message"></div>
+            <button type="submit" id="button">Login</button>
+            <br> Don't Have An Account?
+            <a href="regs.html">Register Now</a>
+        </form>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 QuizMaster Portal. All Rights Reserved.</p>
+    </footer>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script>
+        var app = angular.module('universityLoginApp', []);
+
+        app.controller('LoginController', function($scope, $http, $interval) {
+            $scope.backgroundImages = ['for.avif', 'for2.avif', 'for3.avif'];
+            $scope.currentBackgroundIndex = 0;
+
+            $interval(function() {
+                $scope.currentBackgroundIndex = ($scope.currentBackgroundIndex + 1) % $scope.backgroundImages.length;
+                updateBackground();
+            }, 5000);
+
+            function updateBackground() {
+                var imageUrl = $scope.backgroundImages[$scope.currentBackgroundIndex];
+                document.body.style.background = 'url(' + imageUrl + ') center/cover no-repeat';
+            }
+
+            updateBackground();
+
+            $scope.login = function() {
+                var valid = validate();
+                if (valid) {
+                    $http.post('/login', {
+                        username: $scope.username,
+                        password: $scope.password
+                    }).then(function(response) {
+                        alert('Login successful!');
+                        window.location.href = 'quiz.html';
+                    }).catch(function(error) {
+                        document.getElementById('error-message').innerText = error.data;
+                    });
+                }
+            };
+
+            function validate() {
+                var a = document.getElementById('username').value;
+                var p = document.getElementById('password').value;
+
+                if (a === "") {
+                    document.getElementById('error-message').innerText = 'Please enter your name';
+                    return false;
+                }
+
+                if (!/^[0-9]/.test(a)) {
+                    document.getElementById('error-message').innerText = 'Username must start with a digit';
+                    return false;
+                }
+
+                if (a.length < 10) {
+                    document.getElementById('error-message').innerText = 'Username must contain at least 10 digits';
+                    return false;
+                }
+
+                if (p === "") {
+                    document.getElementById('error-message').innerText = 'Please enter your password';
+                    return false;
+                }
+
+                if ((p.length < 5) || (p.length > 15)) {
+                    document.getElementById('error-message').innerText = 'Password must be 5 to 15 characters only';
+                    return false;
+                }
+
+                if (!/[A-Z]/.test(p) || !/[a-z]/.test(p) || !/\d/.test(p)) {
+                    document.getElementById('error-message').innerText = 'Password must contain at least one uppercase letter, one lowercase letter, and one digit';
+                    return false;
+                }
+
+                if (/[;.:]/.test(p)) {
+                    document.getElementById('error-message').innerText = 'Password cannot contain the symbols ; . :';
+                    return false;
+                }
+
+                return true;
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)file:///C:/Users/guest1/OneDrive/Desktop/rafiya.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuizMaster</title>
+    <style>
+        /* Global Styles */
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f4f9; /* Light background */
+            color: #333; /* Text color */
+            background-image: url(''); /* Watermark image */
+            background-repeat: no-repeat;
+            background-size: cover; /* Cover the entire background */
+            position: relative; /* Position relative for footer */
+            height: 100vh; /* Full height */
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(0, 51, 102, 0.8); /* Dark blue with transparency */
+            color: white;
+            padding: 10px 20px; /* Reduced header size */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%; /* Full width */
+            top: 0; /* Stick to the top */
+            z-index: 1000; /* Ensure it's on top */
+        }
+.parent-container {
+    display: flex; /* Enable flexbox */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    height: 100vh; /* Set height to full viewport height */
+    text-align: center; /* Center text inside the container */
+}
+
+.timer {
+    font-size: 18px;
+    margin-right: 20px; /* Reset left margin */
+}
+
+
+                /* Main Content */
+        .main {
+            flex: 1; /* Allow this section to grow */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 60px; /* Add margin to prevent overlap with header */
+            overflow-y: auto; /* Enable vertical scrolling */
+            padding: 20px;
+            flex-direction: column;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.9); /* White with transparency */
+            padding: 40px 20px;
+            border-radius: 8px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            width: 100%; /* Full width */
+            max-width: 800px; /* Limit max width */
+            display: none; /* Initially hide all questions */
+        }
+
+        /* Question Styles */
+        .options {
+            display: flex;
+            flex-direction: column;
+            margin-top: 20px;
+        }
+
+        .options label {
+            background-color: #e7f3fe; /* Light blue */
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .options label:hover {
+            background-color: #d0e3ff; /* Darker blue on hover */
+        }
+
+        /* Buttons */
+        .buttons {
+            display: flex;
+            justify-content: space-between; /* Space between buttons */
+            margin-top: 20px;
+        }
+        
+
+        .button {
+            padding: 12px 20px;
+            font-size: 18px;
+            background-color: #003366; /* Dark blue */
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #002244; /* Darker blue on hover */
+        }
+	
+
+
+       #result {
+    display: none; /* Initially hide results */
+    text-align: center; /* Center text within the box */
+    margin-top: 20px; /* Space above the box */
+    padding: 20px; /* Space inside the box */
+    background-color: #ffffff; /* Solid white background */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    max-width: 900px; /* Maximum width of the box */
+    margin-left: auto; /* Center box horizontally */
+    margin-right: auto; /* Center box horizontally */
+}
+.result-container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }      /* Footer */
+        footer {
+            background-color: rgba(0, 51, 102, 0.8); /* Same color as header */
+            color: white; /* Text color for copyright */
+            text-align: center;
+            padding: 10px 0;
+            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1); /* Shadow for footer */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>QuizMaster</h1>
+        </div>
+        <div class="timer">
+            Time Left: <span id="timer">00:01:00</span>
+        </div>
+    </header>
+
+    <div class="main">
+        <!-- Questions -->
+        <div class="hero" id="question1" style="display: block;">
+            <h2>Question 1</h2>
+            <p>In the end, Maya decided __ leave with Raj</p>
+            <div class="options">
+                <label><input type="radio" name="answer1" value="of"> of</label>
+                <label><input type="radio" name="answer1" value="to"> to</label>
+                <label><input type="radio" name="answer1" value="with"> with</label>
+                <label><input type="radio" name="answer1" value="none"> None</label>
+            </div>
+            <div class="buttons">
+                <button class="button" id="nextBtn1" onclick="nextQuestion()">Next</button>
+            </div>
+        </div>
+
+        <div class="hero" id="question2" style="display: none;">
+            <h2>Question 2</h2>
+            <p>What is the capital of France?</p>
+            <div class="options">
+                <label><input type="radio" name="answer2" value="london"> London</label>
+                <label><input type="radio" name="answer2" value="paris"> Paris</label>
+                <label><input type="radio" name="answer2" value="berlin"> Berlin</label>
+                <label><input type="radio" name="answer2" value="none"> None</label>
+            </div>
+            <div class="buttons">
+                <button class="button" id="prevBtn2" onclick="prevQuestion()">Previous</button>
+                <button class="button" id="nextBtn2" onclick="nextQuestion()">Next</button>
+            </div>
+        </div>
+
+        <div class="hero" id="question3" style="display: none;">
+            <h2>Question 3</h2>
+            <p>How many continents are there?</p>
+            <div class="options">
+                <label><input type="radio" name="answer3" value="5"> 5</label>
+                <label><input type="radio" name="answer3" value="6"> 6</label>
+                <label><input type="radio" name="answer3" value="7"> 7</label>
+                <label><input type="radio" name="answer3" value="none"> None</label>
+            </div>
+            <div class="buttons">
+                <button class="button" id="prevBtn3" onclick="prevQuestion()">Previous</button>
+                <button class="button" id="nextBtn3" onclick="nextQuestion()">Next</button>
+            </div>
+        </div>
+
+        <div class="hero" id="question4" style="display: none;">
+            <h2>Question 4</h2>
+            <p>Which planet is known as the Red Planet?</p>
+            <div class="options">
+                <label><input type="radio" name="answer4" value="earth"> Earth</label>
+                <label><input type="radio" name="answer4" value="mars"> Mars</label>
+                <label><input type="radio" name="answer4" value="jupiter"> Jupiter</label>
+                <label><input type="radio" name="answer4" value="none"> None</label>
+            </div>
+            <div class="buttons">
+                <button class="button" id="prevBtn4" onclick="prevQuestion()">Previous</button>
+                <button class="button" id="nextBtn4" onclick="nextQuestion()">Next</button>
+            </div>
+        </div>
+
+        <div class="hero" id="question5" style="display: none;">
+            <h2>Question 5</h2>
+            <p>What is the largest ocean on Earth?</p>
+            <div class="options">
+                <label><input type="radio" name="answer5" value="atlantic"> Atlantic</label>
+                <label><input type="radio" name="answer5" value="pacific"> Pacific</label>
+                <label><input type="radio" name="answer5" value="indian"> Indian</label>
+                <label><input type="radio" name="answer5" value="none"> None</label>
+            </div>
+            <div class="buttons">
+                <button class="button" id="prevBtn5" onclick="prevQuestion()">Previous</button>
+                <button class="button" id="nextBtn5" onclick="nextQuestion()">Next</button>
+            </div>
+        </div>
+
+        <div class="hero" id="question6" style="display: none;">
+            <h2>Question 6</h2>
+            <p>Which gas do plants absorb from the atmosphere?</p>
+            <div class="options">
+                <label><input type="radio" name="answer6" value="oxygen"> Oxygen</label>
+                <label><input type="radio" name="answer6" value="nitrogen"> Nitrogen</label>
+                <label><input type="radio" name="answer6" value="carbon_dioxide"> Carbon Dioxide</label>
+                <label><input type="radio" name="answer6" value="none"> None</label>
+            </div>
+            <div class="buttons">
+                <button class="button" id="prevBtn6" onclick="prevQuestion()">Previous</button>
+                <button class="button" id="nextBtn6" onclick="nextQuestion()">Next</button>
+            </div>
+        </div>
+
+        <div class="hero" id="question7" style="display: none;">
+            <h2>Question 7</h2>
+            <p>What is the boiling point of water?</p>
+            <div class="options">
+                <label><input type="radio" name="answer7" value="0"> 0°C</label>
+                <label><input type="radio" name="answer7" value="100"> 100°C</label>
+                <label><input type="radio" name="answer7" value="50"> 50°C</label>
+                <label><input type="radio" name="answer7" value="none"> None</label>
+            </div>
+            <div class="buttons">
+                <button class="button" id="prevBtn7" onclick="prevQuestion()">Previous</button>
+                <button class="button" id="nextBtn7" onclick="nextQuestion()">Next</button>
+            </div>
+        </div>
+
+        <div class="hero" id="question8" style="display: none;">
+            <h2>Question 8</h2>
+            <p>Who wrote "Romeo and Juliet"?</p>
+            <div class="options">
+                <label><input type="radio" name="answer8" value="shakespeare"> William Shakespeare</label>
+                <label><input type="radio" name="answer8" value="austen"> Jane Austen</label>
+                <label><input type="radio" name="answer8" value="twain"> Mark Twain</label>
+                <label><input type="radio" name="answer8" value="none"> None</label>
+            </div>
+            <div class="buttons">
+                <button class="button" id="prevBtn8" onclick="prevQuestion()">Previous</button>
+                <button class="button" id="nextBtn8" onclick="nextQuestion()">Next</button>
+            </div>
+        </div>
+
+        <div class="hero" id="question9" style="display: none;">
+            <h2>Question 9</h2>
+            <p>What is the chemical symbol for gold?</p>
+            <div class="options">
+                <label><input type="radio" name="answer9" value="au"> Au</label>
+                <label><input type="radio" name="answer9" value="ag"> Ag</label>
+                <label><input type="radio" name="answer9" value="fe"> Fe</label>
+                <label><input type="radio" name="answer9" value="none"> None</label>
+            </div>
+            <div class="buttons">
+                <button class="button" id="prevBtn9" onclick="prevQuestion()">Previous</button>
+                <button class="button" id="nextBtn9" onclick="nextQuestion()">Next</button>
+            </div>
+        </div>
+
+        <div class="hero" id="question10" style="display: none;">
+            <h2>Question 10</h2>
+            <p>Which is the largest mammal in the world?</p>
+            <div class="options">
+                <label><input type="radio" name="answer10" value="elephant"> Elephant</label>
+                <label><input type="radio" name="answer10" value="blue_whale"> Blue Whale</label>
+                <label><input type="radio" name="answer10" value="giraffe"> Giraffe</label>
+                <label><input type="radio" name="answer10" value="none"> None</label>
+            </div>
+            <div class="buttons">
+                <button class="button" id="prevBtn10" onclick="prevQuestion()">Previous</button>
+                <button class="button" id="nextBtn10" onclick="nextQuestion()">Next</button>
+            </div>
+        </div>
+
+        <div class="hero" id="question11" style="display: none;">
+            <h2>Question 11</h2>
+            <p>What is the main ingredient in guacamole?</p>
+            <div class="options">
+                <label><input type="radio" name="answer11" value="tomato"> Tomato</label>
+                <label><input type="radio" name="answer11" value="avocado"> Avocado</label>
+                <label><input type="radio" name="answer11" value="pepper"> Pepper</label>
+                <label><input type="radio" name="answer11" value="none"> None</label>
+            </div>
+            <div class="buttons">
+                <button class="button" id="prevBtn11" onclick="prevQuestion()">Previous</button>
+                <button class="button" id="nextBtn11" onclick="nextQuestion()">Next</button>
+            </div>
+        </div>
+
+        <div class="hero" id="question12" style="display: none;">
+            <h2>Question 12</h2>
+            <p>Which continent is known as the "Dark Continent"?</p>
+            <div class="options">
+                <label><input type="radio" name="answer12" value="asia"> Asia</label>
+                <label><input type="radio" name="answer12" value="africa"> Africa</label>
+                <label><input type="radio" name="answer12" value="south_america"> South America</label>
+                <label><input type="radio" name="answer12" value="none"> None</label>
+            </div>
+            <div class="buttons">
+                <button class="button" id="prevBtn12" onclick="prevQuestion()">Previous</button>
+                <button class="button" id="nextBtn12" onclick="nextQuestion()">Next</button>
+            </div>
+        </div>
+
+        <div class="hero" id="question13" style="display: none;">
+            <h2>Question 13</h2>
+            <p>What is the smallest prime number?</p>
+            <div class="options">
+                <label><input type="radio" name="answer13" value="0"> 0</label>
+                <label><input type="radio" name="answer13" value="1"> 1</label>
+                <label><input type="radio" name="answer13" value="2"> 2</label>
+                <label><input type="radio" name="answer13" value="none"> None</label>
+            </div>
+            <div class="buttons">
+                <button class="button" id="prevBtn13" onclick="prevQuestion()">Previous</button>
+                <button class="button" id="nextBtn13" onclick="nextQuestion()">Next</button>
+            </div>
+        </div>
+
+        <div class="hero" id="question14" style="display: none;">
+            <h2>Question 14</h2>
+            <p>Which element has the chemical symbol 'O'?</p>
+            <div class="options">
+                <label><input type="radio" name="answer14" value="oxygen"> Oxygen</label>
+                <label><input type="radio" name="answer14" value="gold"> Gold</label>
+                <label><input type="radio" name="answer14" value="silver"> Silver</label>
+                <label><input type="radio" name="answer14" value="none"> None</label>
+            </div>
+            <div class="buttons">
+                <button class="button" id="prevBtn14" onclick="prevQuestion()">Previous</button>
+                <button class="button" id="nextBtn14" onclick="nextQuestion()">Next</button>
+            </div>
+        </div>
+
+        <div class="hero" id="question15" style="display: none;">
+            <h2>Question 15</h2>
+            <p>What is the capital of Japan?</p>
+            <div class="options">
+                <label><input type="radio" name="answer15" value="tokyo"> Tokyo</label>
+                <label><input type="radio" name="answer15" value="seoul"> Seoul</label>
+                <label><input type="radio" name="answer15" value="beijing"> Beijing</label>
+                <label><input type="radio" name="answer15" value="none"> None</label>
+            </div>
+            <div class="buttons">
+                <button class="button" id="prevBtn15" onclick="prevQuestion()">Previous</button>
+                <button class="button" id="nextBtn15" onclick="nextQuestion()">Finish</button>
+            </div>
+        </div>
+        <div id="feedbackForm" style="display:none;">
+            <h3>Feedback</h3>
+            
+            <!-- Field 1: How was the exam -->
+            <label for="examExperience">How was the exam?</label><br>
+            <textarea id="examExperience" rows="4" cols="50" placeholder="Share your thoughts..."></textarea><br><br>
+        
+            <!-- Field 2: Star Rating -->
+            <label>Rate the exam:</label><br>
+            <div class="star-rating">
+                <input type="radio" id="5-stars" name="rating" value="5"/>
+                <label for="5-stars" class="star">&#9733;</label>
+                <input type="radio" id="4-stars" name="rating" value="4"/>
+                <label for="4-stars" class="star">&#9733;</label>
+                <input type="radio" id="3-stars" name="rating" value="3"/>
+                <label for="3-stars" class="star">&#9733;</label>
+                <input type="radio" id="2-stars" name="rating" value="2"/>
+                <label for="2-stars" class="star">&#9733;</label>
+                <input type="radio" id="1-star" name="rating" value="1"/>
+                <label for="1-star" class="star">&#9733;</label>
+            </div><br>
+        
+            <!-- Field 3: Any suggestions -->
+            <label for="suggestions">Any suggestions for improvement?</label><br>
+            <textarea id="suggestions" rows="4" cols="50" placeholder="Your suggestions..."></textarea><br><br>
+        
+            <!-- Submit Button -->
+            <button onclick="submitFeedback()">Submit Feedback</button>
+        </div>
+        
+
+        <!-- Result Page -->
+        <div class="result" id="resultPage" style="display: none;">
+            <h2>Quiz Results</h2>
+            <div class="result-container">
+                <p>Total Questions: <span id="totalQuestions">15</span></p>
+                <p>Total Attempted: <span id="totalAttempted">0</span></p>
+                <p>Your Score: <span id="score">0</span></p>
+            </div>
+            <button onclick="redirectToFeedback()">Give Feedback</button>
+
+        </div>
+
+    </div>
+	<footer>
+        <p>&copy; 2024 QuizMaster. All rights reserved.</p>
+    </footer>
+    <script>
+        // JavaScript functions to handle quiz navigation and scoring
+        let timeLeft = 60;
+
+        // Update the timer every second
+        const timerInterval = setInterval(function() {
+            // Calculate minutes and seconds
+            let minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+
+            // Add leading zeros for better formatting
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            // Display the time
+            document.getElementById("timer").textContent = `${minutes}:${seconds}`;
+
+            // Decrement the time left
+            timeLeft--;
+
+            // Stop the timer when it reaches zero
+            if (timeLeft < 0) {
+                clearInterval(timerInterval);
+                showResult();  // Show the result page
+        updateResult(); // You can replace this with a function to submit the quiz
+            }
+        }, 1000); // Update every second (1000 milliseconds)
+
+        let currentQuestion = 1;
+        let totalQuestions = 15;
+        let score = 0;
+        let totalAttempted = 0;
+
+        function showQuestion(questionNumber) {
+            // Hide all questions
+            for (let i = 1; i <= totalQuestions; i++) {
+                document.getElementById("question" + i).style.display = "none";
+            }
+            // Show the current question
+            document.getElementById("question" + questionNumber).style.display = "block";
+        }
+        const correctAnswers = {
+    1: "to",
+    2: "paris",
+    3: "7",
+    4: "mars",
+    5: "pacific",
+    6: "carbon_dioxide",
+    7: "100",
+    8: "shakespeare",
+    9: "au",
+    10: "blue_whale",
+    11: "avocado",
+    12: "africa",
+    13: "2",
+    14: "oxygen"
+};
+
+function nextQuestion() {
+    // Logic to evaluate the selected answer
+    const selectedOption = document.querySelector('input[name="answer' + currentQuestion + '"]:checked');
+    if (selectedOption) {
+        totalAttempted++;
+        // Increment score if the selected option is correct
+        if (selectedOption.value === correctAnswers[currentQuestion]) {
+            score++;
+        }
+    }
+    // Move to the next question or show result
+    if (currentQuestion < totalQuestions) {
+        currentQuestion++;
+        showQuestion(currentQuestion);
+    } else {
+        showResult();
+    }
+    updateResult();
+}
+
+
+        function prevQuestion() {
+            if (currentQuestion > 1) {
+                currentQuestion--;
+                showQuestion(currentQuestion);
+            }
+        }
+
+        function showResult() {
+            // Hide questions and show results
+            for (let i = 1; i <= totalQuestions; i++) {
+                document.getElementById("question" + i).style.display = "none";
+            }
+            document.getElementById("resultPage").style.display = "block";
+        }
+
+        function updateResult() {
+            document.getElementById("totalAttempted").innerText = totalAttempted;
+            document.getElementById("score").innerText = score;
+        }
+
+        function redirectToFeedback() {
+    window.location.href = "feedback.html"; // Redirect to the feedback form page
+}
+        // Start the quiz by showing the first question
+        showQuestion(currentQuestion);
+    </script>
+
+
+
+
+               
+</body></html>

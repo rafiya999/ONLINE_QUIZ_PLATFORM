@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Profile Page Styles */
+        .profile-container {
+            width: 100%;
+            max-width: 700px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #003366;
+        }
+
+        .profile-form label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .profile-form input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .profile-form button {
+            width: 100%;
+            padding: 10px;
+            background-color: #003366;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .profile-form button:hover {
+            background-color: #005499;
+        }
+
+        .profile-form .profile-pic {
+            display: block;
+            margin: 0 auto 20px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #003366;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #003366;
+            color: white;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <h1>QuizMaster</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="regs.html">Register</a></li>
+                <li><a href="profile.html">Profile</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="profile-container">
+        <h2>User Profile</h2>
+        <form class="profile-form" id="profileForm">
+            <!-- Profile Picture -->
+            <img src="https://via.placeholder.com/100" alt="Profile Picture" class="profile-pic">
+
+            <!-- Name -->
+            <label for="name">Username</label>
+            <input type="text" id="name" name="name" value="" required>
+
+            <!-- Password -->
+            <label for="password">Change Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter new password">
+
+            <!-- Update Button -->
+            <button type="submit">Update Profile</button>
+        </form>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2024 QuizMaster. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Form submission (for demo purposes, no actual backend logic)
+        document.getElementById('profileForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Profile updated successfully!');
+        });
+    </script>
+</body>
+</html>
